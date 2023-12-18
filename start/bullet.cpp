@@ -12,7 +12,7 @@ Bullet::Bullet()
 	timer.start();
 }
 
-Bullet::~Bullet(){
+	Bullet::~Bullet(){
 
 }
 
