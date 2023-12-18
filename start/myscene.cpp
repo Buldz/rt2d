@@ -6,14 +6,8 @@
 
 #include <fstream>
 #include <sstream>
-#include "player.h"
+#include <vector>
 #include "myscene.h"
-#include "bullet.h"
-
-int velocity = 0;
-int walk = 300;
-int sprint = 500;
-
 
 MyScene::MyScene() : Scene()
 {
@@ -23,16 +17,13 @@ MyScene::MyScene() : Scene()
 	player->position = Point2(SWIDTH/2, SHEIGHT/2);
 	player->scale = Point(0.3f, 0.3f);
 
-	bullet = new Bullet();
-	bullet->position = Point2(SWIDTH/2, SHEIGHT/2);
-	bullet->scale = Point(0.2f, 0.2f);
-
 	velocity = walk;
+
+	timer = new Timer();
 
 	// create the scene 'tree'
 	// add player to this Scene as a child.
 	this->addChild(player);
-	this->addChild(bullet);
 }
 
 
@@ -43,6 +34,7 @@ MyScene::~MyScene()
 
 	// delete player from the heap (there was a 'new' in the constructor)
 	delete player;
+	delete timer;
 }
 
 void MyScene::update(float deltaTime)
@@ -86,11 +78,23 @@ void MyScene::update(float deltaTime)
 		velocity = walk;
 	}
 
+	//Player shoots
+	if (input()->getKeyDown(KeyCode::Space)){
+		Bullet* bullet = player->Shoot();
+		addChild(bullet);
+		bullets.push_back(bullet);
+
+		//std::cout << bullets.size() << std::endl;
+	}
+		//delete bullet backwards from list
+		for (int i = bullets.size() - 1; i >=0; i--) { // backwards
+			if (!bullets[i]->isAlive()) {
+				removeChild(bullets[i]);
+				delete bullets[i]; // delete from the heap first
+				bullets.erase(bullets.begin() + i); // then, remove from the list
+			}
+		}
+		
 	//Player looks at mouse
 	player->rotation.z = mouseLocation.getAngle();
-
-	//Player shoots
-	if (input()->getKey(KeyCode::Space)){
-		player->Shoot();
-	}
 }

@@ -1,6 +1,8 @@
 // Player.cpp
 
 #include "player.h"
+#include "bullet.h"
+#include "myscene.h"
 
 Player::Player(): Entity()
 {
@@ -8,17 +10,20 @@ Player::Player(): Entity()
 	this->sprite()->color = GREEN;
 }
 
-Player::~Player()
-{
-
+Player::~Player(){
+	//__parent->removeChild(bullet);
 }
 
 void Player::Move(Vector2 vector){
 	this->position += vector;
 }
 
-void Player::Shoot(){
-	
+Bullet* Player::Shoot(){
+	Bullet* bullet = new Bullet();
+	bullet->position = this->position;
+	bullet->rotation = this->rotation;
+
+	return bullet;
 }
 
 void Player::update(float deltaTime)

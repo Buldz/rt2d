@@ -10,9 +10,9 @@
 #define MYSCENE_H
 
 #include <rt2d/scene.h>
-
 #include "player.h"
 #include "bullet.h"
+#include "timer.h"
 
 /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
@@ -22,6 +22,8 @@ public:
 	MyScene();
 	/// @brief Destructor
 	virtual ~MyScene();
+	std::vector<Bullet*> bullets;
+
 
 	/// @brief update is automatically called every frame
 	/// @param deltaTime the elapsed time in seconds
@@ -29,9 +31,14 @@ public:
 	virtual void update(float deltaTime);
 
 private:
-	/// @brief the rotating square in the middle of the screen
+	// Pointers
 	Player* player;
-	Bullet* bullet;
+	Timer* timer;
+
+	// Variables movement
+	int velocity = 0;
+	int walk = 300;
+	int sprint = 500;
 };
 
 #endif /* SCENE00_H */
