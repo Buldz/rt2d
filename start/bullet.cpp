@@ -18,8 +18,13 @@ Bullet::Bullet()
 
 void Bullet::update(float deltaTime){
 	if (timer.seconds() > deleteBulletTime) alive = false;
+	MoveForward();
 }
 
-void Bullet::Move(Vector2 vector){
-	this->position += vector;
+void Bullet::MoveForward(){
+	double newX = this->position.x + cos(this->rotation.z) * bulletSpeed;
+  	double newY = this->position.y + sin(this->rotation.z) * bulletSpeed;
+
+	this->position.x = newX;
+	this->position.y = newY;
 }

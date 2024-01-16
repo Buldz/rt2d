@@ -21,8 +21,6 @@ public:
 	void Move(Vector2 vector);
 private:
 	/* add your private declarations */
-	//Bullet* bullet;
-	
 };
 
 #endif /* PLAYER_H */

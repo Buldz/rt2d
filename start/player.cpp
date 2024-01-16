@@ -11,7 +11,7 @@ Player::Player(): Entity()
 }
 
 Player::~Player(){
-	//__parent->removeChild(bullet);
+
 }
 
 void Player::Move(Vector2 vector){

@@ -12,7 +12,7 @@
 #include <rt2d/scene.h>
 #include "player.h"
 #include "bullet.h"
-#include "timer.h"
+#include "enemy.h"
 
 /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
@@ -29,11 +29,12 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
-
+	void Movement(float deltaTime);
 private:
 	// Pointers
 	Player* player;
-	Timer* timer;
+	Enemy* enemy;
+	Vector2 playerPosition;
 
 	// Variables movement
 	int velocity = 0;

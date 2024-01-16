@@ -17,13 +17,15 @@ MyScene::MyScene() : Scene()
 	player->position = Point2(SWIDTH/2, SHEIGHT/2);
 	player->scale = Point(0.3f, 0.3f);
 
-	velocity = walk;
+	enemy = new Enemy(player);
+	enemy->position = Point2(60, 60);
 
-	timer = new Timer();
+	velocity = walk;
 
 	// create the scene 'tree'
 	// add player to this Scene as a child.
 	this->addChild(player);
+	this->addChild(enemy);
 }
 
 
@@ -31,18 +33,40 @@ MyScene::~MyScene()
 {
 	// deconstruct and delete the Tree
 	this->removeChild(player);
+	this->removeChild(enemy);
 
 	// delete player from the heap (there was a 'new' in the constructor)
 	delete player;
-	delete timer;
+	delete enemy;
 }
 
 void MyScene::update(float deltaTime)
 {
+	Movement(deltaTime);
+	//Player shoots
+	if (input()->getKeyDown(KeyCode::Space)){
+		Bullet* bullet = player->Shoot();
+		addChild(bullet);
+		bullets.push_back(bullet);
+
+		//std::cout << bullets.size() << std::endl;
+	}
+		//delete bullet backwards from list
+		for (int i = bullets.size() - 1; i >=0; i--) { // backwards
+			if (!bullets[i]->isAlive()) {
+				removeChild(bullets[i]);
+				delete bullets[i]; // delete from the heap first
+				bullets.erase(bullets.begin() + i); // then, remove from the list
+			}
+		}
+}
+
+void MyScene::Movement(float deltaTime)
+{
+	playerPosition = player->position;
 	float mx = input()->getMouseX();
 	float my = input()->getMouseY();
 	Vector2 mouseLocation = Vector2(mx, my) - player->position;
-	
 	
 	// CONTROLS
 	// Escape key stops the Scene
@@ -78,23 +102,7 @@ void MyScene::update(float deltaTime)
 		velocity = walk;
 	}
 
-	//Player shoots
-	if (input()->getKeyDown(KeyCode::Space)){
-		Bullet* bullet = player->Shoot();
-		addChild(bullet);
-		bullets.push_back(bullet);
-
-		//std::cout << bullets.size() << std::endl;
-	}
-		//delete bullet backwards from list
-		for (int i = bullets.size() - 1; i >=0; i--) { // backwards
-			if (!bullets[i]->isAlive()) {
-				removeChild(bullets[i]);
-				delete bullets[i]; // delete from the heap first
-				bullets.erase(bullets.begin() + i); // then, remove from the list
-			}
-		}
-		
 	//Player looks at mouse
 	player->rotation.z = mouseLocation.getAngle();
 }
+

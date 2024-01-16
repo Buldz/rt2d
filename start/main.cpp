@@ -16,6 +16,7 @@
 #include <rt2d/core.h>
 
 #include "myscene.h"
+#include <cmath>
 
 /// @brief main entry point
 int main( void )

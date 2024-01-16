@@ -2,7 +2,8 @@
 
 #ifndef BULLET_H
 #define BULLET_H
-
+#include <math.h>
+#include <iostream>
 #include <rt2d/entity.h>
 #include <rt2d/timer.h>
 
@@ -22,11 +23,13 @@ private:
 	// 
 
 	/* add your private declarations */
-	void Move(Vector2 vector);
+	void MoveForward();
+	void Bullet::AddForce(Vector2);
 
 	// Variable movement
-	int velocity = 700;
+	float bulletSpeed = 1.3f;
 
+	//
 	float deleteBulletTime = 10.00f;
 	bool alive;
 };
