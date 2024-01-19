@@ -8,6 +8,7 @@ Player::Player(): Entity()
 {
 	this->addSprite("assets/square.tga");
 	this->sprite()->color = GREEN;
+	this->scale = Point(0.3f, 0.3f);
 }
 
 Player::~Player(){

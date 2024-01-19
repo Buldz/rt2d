@@ -30,6 +30,8 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 	void Movement(float deltaTime);
+	void Shoot();
+
 private:
 	// Pointers
 	Player* player;

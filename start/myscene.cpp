@@ -11,16 +11,13 @@
 
 MyScene::MyScene() : Scene()
 {
-	// create a single instance of player in the middle of the screen.
-	// the Sprite is added in Constructor of player.
+	//Spawns player
 	player = new Player();
 	player->position = Point2(SWIDTH/2, SHEIGHT/2);
-	player->scale = Point(0.3f, 0.3f);
 
+	//Spawns enemy
 	enemy = new Enemy(player);
 	enemy->position = Point2(60, 60);
-
-	velocity = walk;
 
 	// create the scene 'tree'
 	// add player to this Scene as a child.
@@ -43,27 +40,12 @@ MyScene::~MyScene()
 void MyScene::update(float deltaTime)
 {
 	Movement(deltaTime);
-	//Player shoots
-	if (input()->getKeyDown(KeyCode::Space)){
-		Bullet* bullet = player->Shoot();
-		addChild(bullet);
-		bullets.push_back(bullet);
-
-		//std::cout << bullets.size() << std::endl;
-	}
-		//delete bullet backwards from list
-		for (int i = bullets.size() - 1; i >=0; i--) { // backwards
-			if (!bullets[i]->isAlive()) {
-				removeChild(bullets[i]);
-				delete bullets[i]; // delete from the heap first
-				bullets.erase(bullets.begin() + i); // then, remove from the list
-			}
-		}
+	Shoot();
 }
 
 void MyScene::Movement(float deltaTime)
 {
-	playerPosition = player->position;
+	//Gets position of mouse
 	float mx = input()->getMouseX();
 	float my = input()->getMouseY();
 	Vector2 mouseLocation = Vector2(mx, my) - player->position;
@@ -106,3 +88,20 @@ void MyScene::Movement(float deltaTime)
 	player->rotation.z = mouseLocation.getAngle();
 }
 
+void MyScene::Shoot()
+{
+	//Player shoots and spawns a bullet
+	if (input()->getKeyDown(KeyCode::Space)){
+		Bullet* bullet = player->Shoot();
+		addChild(bullet);
+		bullets.push_back(bullet);
+	}
+		//delete bullet backwards from list
+		for (int i = bullets.size() - 1; i >=0; i--) { // backwards
+			if (!bullets[i]->isAlive()) {
+				removeChild(bullets[i]);
+				delete bullets[i]; // delete from the heap first
+				bullets.erase(bullets.begin() + i); // then, remove from the list
+			}
+		}
+}
