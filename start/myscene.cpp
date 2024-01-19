@@ -98,10 +98,22 @@ void MyScene::Shoot()
 	}
 		//delete bullet backwards from list
 		for (int i = bullets.size() - 1; i >=0; i--) { // backwards
+			if (AABB(bullets[i], enemy))
+			{
+				std::cout << "hit something" << std::endl;
+			}
 			if (!bullets[i]->isAlive()) {
 				removeChild(bullets[i]);
 				delete bullets[i]; // delete from the heap first
 				bullets.erase(bullets.begin() + i); // then, remove from the list
 			}
 		}
+}
+
+bool MyScene::AABB(Entity* rect1, Entity* rect2)
+{
+	return (rect1->position.x < rect2->position.x + rect2->sprite()->size.x &&
+					rect1->position.x + rect1->sprite()->size.x > rect2->position.x &&
+					rect1->position.y < rect2->position.y + rect2->sprite()->size.y &&
+					rect1->position.y + rect1->sprite()->size.y > rect2->position.y);
 }

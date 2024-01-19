@@ -31,6 +31,7 @@ public:
 	virtual void update(float deltaTime);
 	void Movement(float deltaTime);
 	void Shoot();
+	bool AABB(Entity *rect1, Entity *rect2);
 
 private:
 	// Pointers
