@@ -5,9 +5,9 @@
 Bullet::Bullet()
 	: Entity()
 {
-	this->addSprite("assets/bullet.tga");
+	this->addSprite("assets/square.tga");
 	this->sprite()->color = YELLOW;
-	this->scale = Point(0.2f, 0.2f);
+	this->scale = Point(0.25f, 0.125f);
 	alive = true;
 	timer.start();
 }

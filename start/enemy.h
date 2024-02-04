@@ -18,10 +18,15 @@ public:
 	virtual void update(float deltaTime);
 
 	void MoveToTarget(float deltaTime);
+	void Health(int damage);
+	void RandomSpawn();
+	bool EnemyIsAlive() { return alive; }
 
 private:
 	/* add your private declarations */
 	float enemySpeed = 75.0f;
+	bool alive;
+	int health;
 
 	Player* player;
 };

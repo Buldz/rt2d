@@ -17,7 +17,8 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
-	bool isAlive() { return alive; }
+	bool BulletIsAlive() { return alive; }
+
 	Timer timer;
 private:
 	// 

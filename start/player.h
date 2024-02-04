@@ -19,8 +19,14 @@ public:
 
 	Bullet* Shoot();
 	void Move(Vector2 vector);
+	void Health(float damage);\
+
+	bool PlayerIsAlive() { return alive; }
+
 private:
 	/* add your private declarations */
+	float health;
+	bool alive;
 };
 
 #endif /* PLAYER_H */
